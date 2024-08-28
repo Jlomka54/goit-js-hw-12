@@ -25,9 +25,9 @@ const onSearchPhotos = async event => {
          event.preventDefault();
         searchValue = formEl.elements.search.value;
         
+        loader.classList.add('loader');
         currentPage = 1;
-
-
+        
         galleryList.innerHTML = '';
         const { data } = await fetchPhotos(searchValue, currentPage);
         
@@ -75,14 +75,17 @@ loader.classList.remove('loader')
 
 const onLoadMorePhotos = async e => {
     try {
+        loader.classList.add('loader');
+        
         currentPage++;
-
         const { data } = await fetchPhotos(searchValue, currentPage);
         
         const galleryCardsTemplate = data.hits.map(photoInfo => createGalerryCard(photoInfo)).join('');
 
-            galleryList.insertAdjacentHTML('beforeend', galleryCardsTemplate)
-     
+        galleryList.insertAdjacentHTML('beforeend', galleryCardsTemplate)
+        
+        loader.classList.remove('loader')
+        
         galleryLightbox.refresh();
         
         if (currentPage === Math.ceil(data.total / 15)) {
