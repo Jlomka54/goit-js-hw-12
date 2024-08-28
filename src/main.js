@@ -83,6 +83,8 @@ const onLoadMorePhotos = async e => {
 
             galleryList.insertAdjacentHTML('beforeend', galleryCardsTemplate)
      
+        galleryLightbox.refresh();
+        
         if (currentPage === Math.ceil(data.total / 15)) {
             loadMoreBT.classList.add('is-hidden');
             iziToast.info({
